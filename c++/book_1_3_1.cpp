@@ -1,8 +1,9 @@
-//연습문제 1 : 동적 크기 배열 구현하기
+//동적 크기 배열 구현하기
 
 #include <string>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 template <typename T>
 class dynamic_array {
@@ -15,7 +16,7 @@ class dynamic_array {
         this->n = n;
         data = new T[n];
     }
-    //복사 생성자
+    //蹂듭궗 ?깮?꽦?옄
     dynamic_array(const dynamic_array<T>& other) {
         n = other.n;
         data = new T[n];
@@ -37,14 +38,14 @@ class dynamic_array {
         if(index < n){
             return data[index];
         }
-        throw "Index out of range"
+        throw "Index out of range";
     }
 
     size_t size() const{
         return n;
     }
 
-    //소멸자
+    //?냼硫몄옄
     ~dynamic_array(){
         delete[] data;
     }
@@ -70,8 +71,8 @@ class dynamic_array {
         std::ostringstream os;
         os << data[0];
 
-        for(int i=1; i<n;i++){
-            os << sep <<data[i];
+        for(int i=1; i<n;i++) {
+            os << sep << data[i];
         }
 
         return os.str();
@@ -89,14 +90,14 @@ std::ostream& operator<<(std::ostream& os, const student& s){
 
 int main(){
     int nStudents;
-    std::cout << "1반 학생 수를 입력하세요: ";
+    std::cout << "enter num of class 1 student: ";
     std::cin >> nStudents;
 
     dynamic_array<student> class1(nStudents);
     for (int i=0;i<nStudents;i++){
         std::string name;
         int standard;
-        std::cout << i+1 << " 번째 학생 이름과 나이를 입력하세요: ";
+        std::cout << i+1 << "번째 학생 이름, 나이 입력: ";
         std::cin >> name >> standard;
         class1[i] = student{name, standard};
     }
@@ -104,10 +105,17 @@ int main(){
     try{
         class1.at(nStudents) = student{"John", 8};
     } catch(...){
-        std::cout << "예외 발생!" << std::endl;
+        std::cout << "예외발생!" << std::endl;
     }
 
     //deep copy
     auto class2 = class1;
+    std::cout << "1반을 복사하여 2반 생성: " << class2.to_string() << std::endl;
+
+    //
+    auto class3 = class1 + class2;
+    std::cout << "1반과 2반을 합쳐 3반 생성: " << class3.to_string() << std::endl;
+
+    return 0;
     
 }
