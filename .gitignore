@@ -4,3 +4,4 @@ venv/
 *.iml
 *.exe
 /visualstudio/
+bin/
